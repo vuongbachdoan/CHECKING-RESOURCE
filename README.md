@@ -7,7 +7,7 @@ Hi! I'm **Bach Doan Vuong**. Wellcome to next my project.
 
 ### How to install this project
 
-    git clone https://github.com/vuongbachdoan/TODO.git
+    git clone https://github.com/vuongbachdoan/CHECKING-RESOURCE.git
     python -m vevn my-venv
     pip install -r requirements.txt
     python main.py
