@@ -1,6 +1,6 @@
 import boto3
+from termcolor import colored
 
-# Create a session using your AWS credentials
 session = boto3.Session()
 
 class Core:
@@ -9,15 +9,15 @@ class Core:
         services = session.get_available_services()
         return services
 
-    def getEC2Instances(self, type=['pending' , 'running' , 'shutting-down' , 'terminated' , 'stopping' , 'stopped']):
+    def getEC2Instances(self, type=['pending', 'running', 'shutting-down', 'terminated', 'stopping', 'stopped']):
         ec2 = boto3.client('ec2')
 
         # Retrieves all regions/endpoints that work with EC2
         response = ec2.describe_regions()
 
-        print('Checking EC2 instances 🔎')
+        print(colored('Checking EC2 instances ', 'yellow'))  # Yellow for visibility
         for region in response['Regions']:
-            print('🌐 -', region['RegionName'])
+            print(colored('🌍 - ', 'cyan') + region['RegionName'])  # Cyan for region names
             for instance in boto3.resource('ec2', region_name=region['RegionName']).instances.all().filter(
                 Filters=[
                     {
@@ -26,14 +26,14 @@ class Core:
                     }
                 ]
             ):
-                print('⚠️ Warning: ',instance.id)
-    
+                print(colored('⚠️ Warning: ', 'red') + instance.id)  # Red for warnings
+
     def listS3Buckets(self):
-        print('Checking S3 bucket 🔎')
+        print(colored('Checking S3 buckets ', 'yellow'))  # Yellow for visibility
         s3 = boto3.client('s3')
         buckets = s3.list_buckets()
         return buckets['Buckets']
-    
+
     def listS3Objects(self, bucketName):
         print(bucketName)
 
