@@ -5,6 +5,7 @@ coreServices = Core()  # Highlighted in blue for clarity
 resources = coreServices.getAllResources()
 
 for resource in resources:
+    # print(resource)
     if resource == 'ec2':
         coreServices.getEC2Instances(['running'])  # Applied yellow for visibility
         pass
@@ -18,3 +19,15 @@ for resource in resources:
         for instance in rdsInstances:
             status_indicator = colored('⚠️ (running)', 'red') if instance['DBInstanceStatus'] == 'available' else 'Instance:'
             print(status_indicator, instance['DBInstanceIdentifier'], instance['DBInstanceClass'], instance['Engine'])
+        pass
+    elif resource == 'vpc-lattice':
+        vpcs = coreServices.listVPCs()
+        for vpc in vpcs:
+            print(f"Region: {vpc['Region']}, VPC ID: {vpc['VPC ID']}, CIDR Block: {vpc['CIDR Block']}, State: {vpc['State']}, Is Default: {vpc['Is Default']}")
+        pass
+    if resource == 'lambda':
+        lambdas = coreServices.listLambda()
+        for lambdaList in lambdas:
+            print(f"Region: {lambdaList['Region']}, "
+                f"Function Name: {lambdaList['FunctionName']}")
+        pass
