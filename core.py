@@ -11,24 +11,15 @@ class Core:
         return services
 
     def getEC2Instances(self, type=['pending', 'running', 'shutting-down', 'terminated', 'stopping', 'stopped']):
-        ec2 = boto3.client('ec2')
+        ec2_client = boto3.client('ec2')
 
         # Retrieves all regions/endpoints that work with EC2    
-        response = ec2.describe_regions()
+        response = ec2_client.describe_regions()
 
         print(colored('Checking EC2 instances ', 'yellow'))  # Yellow for visibility
         for region in response['Regions']:
             print(colored('🌍 - ', 'cyan') + region['RegionName'])  # Cyan for region names
-            # for instance in boto3.resource('ec2', region_name=region['RegionName']).instances.all().filter(
-            #     Filters=[
-            #         {
-            #             'Name': 'instance-state-name',
-            #             'Values': type
-            #         }
-            #     ]
-            # ):
-            #     print(colored('⚠️ Warning: ', 'red') + instance.id)  # Red for warnings
-            
+        
             instances = boto3.resource('ec2', region_name=region['RegionName']).instances.filter(
                 Filters=[
                     {
@@ -59,6 +50,7 @@ class Core:
         print(bucketName)
 
     def listRDSInstances(self):
+        print(colored('Checking RDS ', 'yellow'))  # Yellow for visibility
         rds = boto3.client('rds')
         return rds.describe_db_instances()['DBInstances']
 
