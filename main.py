@@ -36,7 +36,7 @@ for resource in resources:
         # Get all RDS instances
         rds_instances = core_service.get_rds_instances()
         # Prepare the header for the RDS information
-        rds_informations = "Instance ID, Instance Type, DB Engine"
+        rds_informations = "Instance ID,Instance Type,DB Engine\n"
         # Iterate over each RDS instance
         for instance in rds_instances:
             # Get the details of the RDS instance and append it to the RDS information
@@ -55,7 +55,7 @@ for resource in resources:
         # Get all VPCs
         vpcs = core_service.get_vpcs()
         # Prepare the header for the VPC information
-        vpc_informations = "Region, VPC ID, CIDR Block, State, Is Default\n"
+        vpc_informations = "Region,VPC ID,CIDR Block,State,Is Default\n"
         # Iterate over each VPC
         for vpc in vpcs:
             # Get the details of the VPC and append it to the VPC information
@@ -75,7 +75,7 @@ for resource in resources:
         # List all Lambda functions
         lambdas = core_service.list_lambda()
         # Prepare the header for the Lambda information
-        lambda_informations = "Function Name, Runtime, Handler, Memory Size, Timeout, Role"
+        lambda_informations = "Function Name,Runtime,Handler,Memory Size,Timeout,Role\n"
         # Get the current timestamp
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         # Write the Lambda information to an S3 bucket

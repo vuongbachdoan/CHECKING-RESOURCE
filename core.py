@@ -48,7 +48,7 @@ class Core:
         regions = [region]
         if region == 'all':
             regions = self.get_ec2_regions()
-        csv_content = "Region, Name, Id, Type, State, Launch Time"
+        csv_content = "Region,Name,Id,Type,State,Launch Time\n"
         for region in regions:
             if self.show_ui:
                 print(colored('🌍 - ', 'cyan') + region['RegionName'])
@@ -65,7 +65,7 @@ class Core:
                     instance_type = instance.instance_type
                     instance_state = instance.state['Name']
                     instance_launch_time = instance.launch_time
-                    csv_content += f"{region}, {instance_name},{instance_id},{instance_type},{instance_state},{instance_launch_time}\n"
+                    csv_content += f"{region['RegionName']},{instance_name},{instance_id},{instance_type},{instance_state},{instance_launch_time}\n"
                     print(colored('⚠️(warning):', 'red'), instance_name, instance_id, instance_type, instance_state, instance_launch_time)
                 except Exception as e:
                     print(f"Error processing instance {instance.id}: {e}")
@@ -122,7 +122,7 @@ class Core:
     def get_rds_instance_detail(self, instance):
         status_indicator = colored('⚠️ (running)', 'red') if instance['DBInstanceStatus'] == 'available' else 'Instance:'
         print(status_indicator, instance['DBInstanceIdentifier'], instance['DBInstanceClass'], instance['Engine'])
-        return f"{instance['DBInstanceIdentifier']}, {instance['DBInstanceClass']}, {instance['Engine']}\n"
+        return f"{instance['DBInstanceIdentifier']},{instance['DBInstanceClass']},{instance['Engine']}\n"
 
     # Desc: get all VPC
     def get_vpcs(self):
@@ -156,7 +156,7 @@ class Core:
             function_timeout = function['Timeout']
             function_role = function['Role']
             allLambda += f"{function_name}, {function_runtime}, {function_handler}, {function_memory}, {function_timeout}, {function_role}\n"
-            print(f"{function_name}, {function_runtime}, {function_handler}, {function_memory}, {function_timeout}, {function_role}")
+            print(f"{function_name},{function_runtime},{function_handler},{function_memory},{function_timeout},{function_role}")
         return allLambda
     
 
