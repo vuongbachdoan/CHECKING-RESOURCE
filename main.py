@@ -21,7 +21,7 @@ for resource in resources:
         # Get all S3 buckets
         buckets = core_service.get_s3_buckets()
         # Prepare the header for the bucket information
-        bucket_information = "Bucket Name,Creation Date,Owner ID,Objects,Object Key,Object Size,Object Last Modified\n"
+        bucket_information = "bucket_name,creation_date,owner_id,objects,object_key,object_size,object_last_modified\n"
         # Iterate over each bucket
         for bucket in buckets:
             # Get the details of the bucket and append it to the bucket information
@@ -36,7 +36,7 @@ for resource in resources:
         # Get all RDS instances
         rds_instances = core_service.get_rds_instances()
         # Prepare the header for the RDS information
-        rds_informations = "Instance ID,Instance Type,DB Engine\n"
+        rds_informations = "instance_id,instance_type,db_engine\n"
         # Iterate over each RDS instance
         for instance in rds_instances:
             # Get the details of the RDS instance and append it to the RDS information
@@ -55,7 +55,7 @@ for resource in resources:
         # Get all VPCs
         vpcs = core_service.get_vpcs()
         # Prepare the header for the VPC information
-        vpc_informations = "Region,VPC ID,CIDR Block,State,Is Default\n"
+        vpc_informations = "region,vpc_id,cidr_block,state,is_default\n"
         # Iterate over each VPC
         for vpc in vpcs:
             # Get the details of the VPC and append it to the VPC information
@@ -75,12 +75,12 @@ for resource in resources:
         # List all Lambda functions
         lambdas = core_service.list_lambda()
         # Prepare the header for the Lambda information
-        lambda_informations = "Function Name,Runtime,Handler,Memory Size,Timeout,Role\n"
+        lambda_informations = "function_name,runtime,handler,memory_size,timeout,role\n"
         # Get the current timestamp
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         # Write the Lambda information to an S3 bucket
         core_service.put_object_to_S3(
             lambdas,
             "vuongbach-checking-services",
-            f"lambda/{timestamp}/vpc_info.csv"
+            f"lambda/{timestamp}/lambda_info.csv"
         )

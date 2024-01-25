@@ -48,7 +48,7 @@ class Core:
         regions = [region]
         if region == 'all':
             regions = self.get_ec2_regions()
-        csv_content = "Region,Name,Id,Type,State,Launch Time\n"
+        csv_content = "region,name,id,type,state,launch_time\n"
         for region in regions:
             if self.show_ui:
                 print(colored('🌍 - ', 'cyan') + region['RegionName'])
