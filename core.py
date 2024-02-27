@@ -114,9 +114,13 @@ class Core:
 
     # Desc: get rds instances
     def get_rds_instances(self):
+        regions = self.get_ec2_regions()
         print(colored('Checking RDS ', 'yellow')) 
-        rds = boto3.client('rds')
-        return rds.describe_db_instances()['DBInstances']
+        rds_instances = []
+        for region in regions:
+            rds = boto3.client('rds', region)
+            rds_instances += rds.describe_db_instances()['DBInstances']
+        return rds_instances
     
     # Desc: get rds instance details
     def get_rds_instance_detail(self, instance):
